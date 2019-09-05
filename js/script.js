@@ -56,10 +56,56 @@ const words = [
 function init(){
   //Load word from word array
   showWord(words);
+  //Word input
+  wordInput.addEventListener('wordInput', startGame);
+  //Call timer to count down every second
+  setInterval(countdown, 1000);
+  //Check if game is over
+  setInterval(checkStatus, 50);
+}
+
+//Start game
+function startGame(){
+  if (matchWords()) {
+    isPlaying = true;
+    time = 6;
+    showWord(words);
+    wordInput.value = '';
+    score += 10;
+  }
+}
+
+//Match current word against wordInput
+function matchWords(){
+  if (wordInput.value === currentWord.innerHTML) {
+    message.innerHTML = 'Correct!';
+    return true;
+  } else {
+      message.innerHTML = '';
+      return false;
+    }
 }
 
 //Pick and display random word from array
 function showWord(words){
   const randomIndex = Math.floor(Math.random() * words.length);
   currentWord.innerHTML = words[randomIndex];
+}
+
+//Countdown timer
+function countdown(){
+  if (time > 0) {
+    time--;
+  } else if (time === 0) {
+    isPlaying = false;
+  }
+
+  timeDisplay.innerHTML = time;
+}
+
+//Check if game is over
+function checkStatus(){
+  if (!isPlaying && time === 0) {
+    message.innerHTML = 'Game over!';
+  }
 }
