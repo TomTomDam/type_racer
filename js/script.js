@@ -57,7 +57,7 @@ function init(){
   //Load word from word array
   showWord(words);
   //Word input
-  wordInput.addEventListener('wordInput', startGame);
+  wordInput.addEventListener('input', startGame);
   //Call timer to count down every second
   setInterval(countdown, 1000);
   //Check if game is over
@@ -72,6 +72,11 @@ function startGame(){
     showWord(words);
     wordInput.value = '';
     score += 10;
+  }
+  if (score === -1) {
+    scoreDisplay.innerHTML = 0;
+  } else {
+    scoreDisplay.innerHTML = score;
   }
 }
 
@@ -107,5 +112,6 @@ function countdown(){
 function checkStatus(){
   if (!isPlaying && time === 0) {
     message.innerHTML = 'Game over!';
+    score = -1;
   }
 }
